@@ -6,4 +6,8 @@
         <RootNamespace>indiana_jones_desktop_adventures_ripper</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="SixLabors.ImageSharp" Version="2.0.0" />
+    </ItemGroup>
+
 </Project>
