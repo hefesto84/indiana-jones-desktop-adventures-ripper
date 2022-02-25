@@ -65,20 +65,10 @@ namespace indiana_jones_desktop_adventures_ripper.Data
 
                 var pixelColor = _palette.GetColor(pd);
 
-                var colorRgba32 = new Rgba32(pixelColor.R, pixelColor.G, pixelColor.B, 255);
-    
                 var x = j % 32;
                 var y = j / 32;
-                
-                if (pixelData == 0)
-                {
-                    colorRgba32.B = 255;
-                    colorRgba32.G = 255;
-                    colorRgba32.R = 255;
-                    colorRgba32.A = 1;
-                }
-                
-                img[x,y] = colorRgba32;
+       
+                img[x,y] = pixelData == 0 ? new Rgba32(255,255,255,0) : new Rgba32(pixelColor.R, pixelColor.G, pixelColor.B, 255);
             }
 
             return img;
