@@ -3,9 +3,9 @@ using System.IO;
 using indiana_jones_desktop_adventures_ripper.Data.Base;
 using indiana_jones_desktop_adventures_ripper.Models;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Bmp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using Color = System.Drawing.Color;
 
 namespace indiana_jones_desktop_adventures_ripper.Data
@@ -38,15 +38,14 @@ namespace indiana_jones_desktop_adventures_ripper.Data
 
                 var img = CreateBitmap(tileData);
 
-                var a = img.PixelType.AlphaRepresentation;
-                img.Save($"Tiles/tile_{nTiles}.bmp");
+                img.SaveAsPng($"Tiles/tile_{nTiles}.png", new PngEncoder());
                 
                 nTiles++;
                 
                 Console.WriteLine($"$\\___TILE_{nTiles} ");
             }
         }
-
+        
         private Image CreateBitmap(byte[] data)
         {
             var ms = new MemoryStream(data);
@@ -57,18 +56,24 @@ namespace indiana_jones_desktop_adventures_ripper.Data
             for (var j = 0; j < 1024; j++)
             {
                 var pixelData = br.ReadByte();
-                var x = (int) pixelData;
+                var pd = (int) pixelData;
 
-                var pixelColor = pixelData == 0 ? Color.Transparent : _palette.GetColor(x);
-             
-                var color = img[j % 32, j / 32];
+                var pixelColor = _palette.GetColor(pd);
 
-                color.A = pixelColor.A;
-                color.B = pixelColor.B;
-                color.G = pixelColor.G;
-                color.R = pixelColor.R;
-
-                img[j % 32, j / 32] = color;
+                var colorRgba32 = new Rgba32(pixelColor.R, pixelColor.G, pixelColor.B, 255);
+    
+                var x = j % 32;
+                var y = j / 32;
+                
+                if (pixelData == 0)
+                {
+                    colorRgba32.B = 255;
+                    colorRgba32.G = 255;
+                    colorRgba32.R = 255;
+                    colorRgba32.A = 1;
+                }
+                
+                img[x,y] = colorRgba32;
             }
 
             return img;
