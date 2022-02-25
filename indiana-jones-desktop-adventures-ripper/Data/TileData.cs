@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using indiana_jones_desktop_adventures_ripper.Data.Base;
 using indiana_jones_desktop_adventures_ripper.Models;
@@ -13,13 +14,15 @@ namespace indiana_jones_desktop_adventures_ripper.Data
     public class TileData : IData
     {
         public static string Tag => "TILE";
+        
         private readonly Palette _palette;
+        private Dictionary<string, Image> _tiles;
         
         public TileData(Palette palette)
         {
             _palette = palette;
         }
-        
+
         public void Parse(Section section)
         {
             var ms = new MemoryStream(section.Data);
@@ -31,19 +34,21 @@ namespace indiana_jones_desktop_adventures_ripper.Data
 
             Directory.CreateDirectory("Tiles");
 
+            _tiles = new Dictionary<string, Image>();
+            
             while (ms.Position != section.Data.Length)
             {
                 var flags = br.ReadUInt32();
                 var tileData = br.ReadBytes((int) 1024);
 
                 var img = CreateBitmap(tileData);
-
-                img.SaveAsPng($"Tiles/tile_{nTiles}.png", new PngEncoder());
+                
+                _tiles.Add($"Tiles/tile_{nTiles}.png", img);
                 
                 nTiles++;
-                
-                Console.WriteLine($"$\\___TILE_{nTiles} ");
             }
+            
+            SaveSpritesheet();
         }
         
         private Image CreateBitmap(byte[] data)
@@ -77,6 +82,15 @@ namespace indiana_jones_desktop_adventures_ripper.Data
             }
 
             return img;
+        }
+
+        private void SaveSpritesheet()
+        {
+            foreach (var (key, value) in _tiles)
+            {
+                value.SaveAsPng(key, new PngEncoder());
+                Console.WriteLine($"Adding {key} to spritesheet");
+            }
         }
     }
 }
