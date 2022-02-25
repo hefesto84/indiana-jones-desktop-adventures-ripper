@@ -23,8 +23,14 @@ namespace indiana_jones_desktop_adventures_ripper
             }
 
             if (!areFilesValid) return;
+
+            var sectionService = new SectionService();
             
-            var ripperService = new RipperService(new BinaryReader(File.OpenRead(args[0])), new BinaryReader(File.OpenRead(args[1])));
+            var ripperService = new RipperService(
+                new BinaryReader(File.OpenRead(args[0])), 
+                new BinaryReader(File.OpenRead(args[1])),
+                sectionService);
+            
             ripperService.Rip();
         }
     }

@@ -8,13 +8,18 @@ namespace indiana_jones_desktop_adventures_ripper.Services
     {
         private readonly BinaryReader _dataBinaryFileStream;
         private readonly BinaryReader _execBinaryFileStream;
-
+        private readonly SectionService _sectionService;
+        
         private Palette _palette;
         
-        public RipperService(BinaryReader dataBinaryFileStream , BinaryReader execBinaryFileStream)
+        public RipperService(
+            BinaryReader dataBinaryFileStream , 
+            BinaryReader execBinaryFileStream ,
+            SectionService sectionService)
         {
             _dataBinaryFileStream = dataBinaryFileStream;
             _execBinaryFileStream = execBinaryFileStream;
+            _sectionService = sectionService;
         }
 
         public void Rip()
@@ -22,8 +27,8 @@ namespace indiana_jones_desktop_adventures_ripper.Services
             CheckFileStreams();
 
             SetupPalette();
-            
 
+            ParseSections();
             var p = 0;
             /*
             Console.WriteLine($"Position {_execBinaryFileStream.BaseStream.Position}");
@@ -76,6 +81,18 @@ namespace indiana_jones_desktop_adventures_ripper.Services
         {
             _palette = new Palette(_execBinaryFileStream);   
             _palette.Extract();
+        }
+
+        private void ParseSections()
+        {
+            var s = _dataBinaryFileStream.ReadChars(4);
+            var section1 = new string(s);
+            var version = _dataBinaryFileStream.ReadUInt32();
+
+            while (!_sectionService.IsEndOfFile)
+            {
+                _sectionService.GetSection(_dataBinaryFileStream);
+            }
         }
     }
 }
