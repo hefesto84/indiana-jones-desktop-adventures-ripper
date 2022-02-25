@@ -3,6 +3,7 @@ using System.IO;
 using indiana_jones_desktop_adventures_ripper.Data.Base;
 using indiana_jones_desktop_adventures_ripper.Models;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Bmp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using Color = System.Drawing.Color;
@@ -36,9 +37,10 @@ namespace indiana_jones_desktop_adventures_ripper.Data
                 var tileData = br.ReadBytes((int) 1024);
 
                 var img = CreateBitmap(tileData);
-                
-                img.Save($"Tiles/tile_{nTiles}.bmp");
 
+                var a = img.PixelType.AlphaRepresentation;
+                img.Save($"Tiles/tile_{nTiles}.bmp");
+                
                 nTiles++;
                 
                 Console.WriteLine($"$\\___TILE_{nTiles} ");
@@ -51,7 +53,7 @@ namespace indiana_jones_desktop_adventures_ripper.Data
             var br = new BinaryReader(ms);
 
             var img = new Image<Rgba32>(32, 32);
-         
+            
             for (var j = 0; j < 1024; j++)
             {
                 var pixelData = br.ReadByte();
