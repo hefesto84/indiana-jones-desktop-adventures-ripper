@@ -9,19 +9,18 @@ namespace indiana_jones_desktop_adventures_ripper.Services
 {
     public class SectionService
     {
+        public bool IsEndOfFile { get; private set; }
+        
         private const string EndOfFile = "ENDF";
-
-        public bool IsEndOfFile { get; set; }
-
         private Dictionary<string, IData> _dataContents;
 
-        public SectionService()
+        public void SetDependencies(Palette palette)
         {
             _dataContents = new Dictionary<string, IData>();
             
             _dataContents.Add(StupData.Tag, new StupData());
             _dataContents.Add(SndsData.Tag, new SndsData());
-            _dataContents.Add(TileData.Tag, new TileData());
+            _dataContents.Add(TileData.Tag, new TileData(palette));
             _dataContents.Add(ZoneData.Tag, new ZoneData());
         }
         

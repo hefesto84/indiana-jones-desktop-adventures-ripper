@@ -32,7 +32,7 @@ namespace indiana_jones_desktop_adventures_ripper.Models
             ms.Close();
         }
 
-        private Color GetColor(int index)
+        public Color GetColor(int index)
         {
             return Color.FromArgb(_colors[index]);
         }
