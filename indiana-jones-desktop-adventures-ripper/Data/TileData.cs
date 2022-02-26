@@ -54,6 +54,7 @@ namespace indiana_jones_desktop_adventures_ripper.Data
             }
             
             SaveSpritesheet();
+           
         }
         
         private Image CreateBitmap(byte[] data)
@@ -78,9 +79,11 @@ namespace indiana_jones_desktop_adventures_ripper.Data
 
             return img;
         }
-
-        private void SaveSpritesheet()
+        
+        private void SaveSpritesheet(Dictionary<string, Image> tiles = null)
         {
+            tiles ??= _tiles;
+            
             var sq = (int)Math.Round(Math.Sqrt(_tiles.Count));
             
             var width = sq * SpriteW;

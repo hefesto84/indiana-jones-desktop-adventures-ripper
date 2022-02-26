@@ -8,6 +8,12 @@ namespace indiana_jones_desktop_adventures_ripper
     {
         static void Main(string[] args)
         {
+            if (args == null || args.Length == 0)
+            {
+                Console.WriteLine("ERROR: You must specify the DAW and EXE files location.");
+                return;
+            }
+            
             var areFilesValid = true;
                 
             if (!File.Exists(args[0]))

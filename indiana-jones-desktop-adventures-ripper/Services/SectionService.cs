@@ -19,9 +19,10 @@ namespace indiana_jones_desktop_adventures_ripper.Services
             _dataContents = new Dictionary<string, IData>();
             
             _dataContents.Add(StupData.Tag, new StupData());
-            _dataContents.Add(SndsData.Tag, new SndsData());
-            _dataContents.Add(TileData.Tag, new TileData(palette));
+            //_dataContents.Add(SndsData.Tag, new SndsData());
             _dataContents.Add(ZoneData.Tag, new ZoneData());
+            _dataContents.Add(TileData.Tag, new TileData(palette));
+            
         }
         
         public void GetSection(BinaryReader binaryReader)
