@@ -18,7 +18,14 @@ jobs:
       run: dotnet restore
     - name: Install dotnet format
       run: dotnet tool install -g dotnet-format
-    - name: Evaluate files changed
-      run: git diff ${{ github.base_ref }}
     - name: Execute dotnet-format
       run: dotnet-format . -f --include indiana-jones-desktop-adventures-ripper/
+    - name: Add and commit changes
+      uses: Endbug/add-and-commit@master
+      with:
+        author_name: Github Actions
+        author_email: actions@github.com
+        message: Automated dotnet-format update
+        ref: ${{ github.head_ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
