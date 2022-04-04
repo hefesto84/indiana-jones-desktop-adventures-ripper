@@ -21,7 +21,8 @@ namespace indiana_jones_desktop_adventures_ripper
                 areFilesValid = false;
             }
 
-            if (!areFilesValid) return;
+            if (!areFilesValid)
+                return;
 
             var sectionService = new SectionService();
 
