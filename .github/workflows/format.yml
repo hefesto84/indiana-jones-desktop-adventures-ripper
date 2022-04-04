@@ -21,7 +21,7 @@ jobs:
     - name: Execute dotnet-format
       run: dotnet-format . -f --include indiana-jones-desktop-adventures-ripper/
     - name: Add and commit changes
-      uses: Endbug/add-and-commit@master
+      uses: Endbug/add-and-commit@v9.0.0
       with:
         author_name: Github Actions
         author_email: actions@github.com
