@@ -17,6 +17,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Install dotnet format
-      run: dotnet install -g dotnet-format
+      run: dotnet tool install -g dotnet-format
     - name: Execute dotnet-format
       run: dotnet-format . -f --include indiana-jones-desktop-adventures-ripper/
