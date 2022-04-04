@@ -10,13 +10,13 @@ namespace indiana_jones_desktop_adventures_ripper.Models
         private const int PaletteColors = 256;
 
         private readonly int[] _colors = new int[PaletteColors];
-        
+
         public Palette(BinaryReader execBinaryFileStream) : base(execBinaryFileStream) { }
 
         public void Extract()
         {
             Fs.BaseStream.Position = OffsetPalette;
-            
+
             var data = Fs.ReadBytes(PaletteSize);
 
             var ms = new MemoryStream(data);
@@ -27,7 +27,7 @@ namespace indiana_jones_desktop_adventures_ripper.Models
                 var entry = br.ReadInt32();
                 _colors[i] = entry;
             }
-            
+
             br.Close();
             ms.Close();
         }
