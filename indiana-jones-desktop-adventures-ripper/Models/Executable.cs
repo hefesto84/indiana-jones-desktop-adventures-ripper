@@ -6,7 +6,7 @@ namespace indiana_jones_desktop_adventures_ripper.Models
     {
         public Executable(BinaryReader execBinaryFileStream) : base(execBinaryFileStream)
         {
-            
+
         }
     }
 }
