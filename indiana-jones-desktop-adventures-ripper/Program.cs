@@ -10,18 +10,16 @@ namespace indiana_jones_desktop_adventures_ripper
         {
             var areFilesValid = true;
 
-            if (!File.Exists(args[0]))
-            {
+            if (!File.Exists(args[0])){
                 Console.WriteLine($"File not found, check the path for DAW file: {args[0]}"); areFilesValid = false;
             }
 
-            if (!File.Exists(args[1]))
-            {
+            if (!File.Exists(args[1])){
                 Console.WriteLine($"File not found, check the path for EXE file: {args[1]}");
-                areFilesValid = false;
-            }
+                areFilesValid = false;}
 
-            if (!areFilesValid) return;
+            if (!areFilesValid) 
+                return;
 
             var sectionService = new SectionService();
 
