@@ -1,19 +1,22 @@
-name: Format check on pull request
-on: pull_request
+name: .NET Format
+
+on:
+  pull_request
+  
 jobs:
-  dotnet-format:
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Add dotnet-format problem matcher
-        uses: xt0rted/dotnet-format-problem-matcher@v1
-
-      - name: Restore dotnet tools
-        uses: xt0rted/dotnet-tool-restore@v1
-
-      - name: Run dotnet format
-        uses: xt0rted/dotnet-format@v1
-        with:
-          only-changed-files: "false"
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Install dotnet format
+      run: dotnet install -g dotnet-format
+    - name: Execute dotnet-format
+      run: dotnet-format . -f --include indiana-jones-desktop-adventures-ripper/
