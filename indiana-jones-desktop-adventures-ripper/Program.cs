@@ -9,7 +9,7 @@ namespace indiana_jones_desktop_adventures_ripper
         static void Main(string[] args)
         {
             var areFilesValid = true;
-                
+
             if (!File.Exists(args[0]))
             {
                 Console.WriteLine($"File not found, check the path for DAW file: {args[0]}");
@@ -25,12 +25,12 @@ namespace indiana_jones_desktop_adventures_ripper
             if (!areFilesValid) return;
 
             var sectionService = new SectionService();
-            
+
             var ripperService = new RipperService(
-                new BinaryReader(File.OpenRead(args[0])), 
+                new BinaryReader(File.OpenRead(args[0])),
                 new BinaryReader(File.OpenRead(args[1])),
                 sectionService);
-            
+
             ripperService.Rip();
         }
     }

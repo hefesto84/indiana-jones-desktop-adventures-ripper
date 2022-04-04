@@ -9,12 +9,12 @@ namespace indiana_jones_desktop_adventures_ripper.Services
         private readonly BinaryReader _dataBinaryFileStream;
         private readonly BinaryReader _execBinaryFileStream;
         private readonly SectionService _sectionService;
-        
+
         private Palette _palette;
-        
+
         public RipperService(
-            BinaryReader dataBinaryFileStream , 
-            BinaryReader execBinaryFileStream ,
+            BinaryReader dataBinaryFileStream,
+            BinaryReader execBinaryFileStream,
             SectionService sectionService)
         {
             _dataBinaryFileStream = dataBinaryFileStream;
@@ -39,9 +39,9 @@ namespace indiana_jones_desktop_adventures_ripper.Services
 
         private void SetupPalette()
         {
-            _palette = new Palette(_execBinaryFileStream);   
+            _palette = new Palette(_execBinaryFileStream);
             _palette.Extract();
-            
+
             _sectionService.SetDependencies(_palette);
         }
 
