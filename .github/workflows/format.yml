@@ -25,6 +25,10 @@ jobs:
       run: prid=$(echo ${{ github.ref }} | cut -d "/" -f 3)
     - name: Notify Pull Request Id
       run: echo "Processing PullRequest Id $prid"
+    - name: Cosas ficheros
+      run: curl -s -H "Accept: application/vnd.github.v3.raw+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/hefesto84/pr_label_action/${{ github.ref }}/files | jq -r '.[].filename' > files_changed.txt
+    - name: Echooo
+      run: cat files_changed.txt
     - name: Execute dotnet-format
       run: dotnet-format . -f --include indiana-jones-desktop-adventures-ripper/
     - name: Add and commit changes
