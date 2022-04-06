@@ -17,10 +17,14 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Restore dependencies
-      run: dotnet restore
+    - name: Install jq
+      run: sudo apt install jq
     - name: Install dotnet format
       run: dotnet tool install -g dotnet-format
+    - name: Select Pull Request Id
+      run: prid=$(echo ${{ github.ref }} | cut -d "/" -f 3)
+    - name: Notify Pull Request Id
+      run: echo "Processing PullRequest Id $prid"
     - name: Execute dotnet-format
       run: dotnet-format . -f --include indiana-jones-desktop-adventures-ripper/
     - name: Add and commit changes
